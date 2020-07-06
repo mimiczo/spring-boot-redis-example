@@ -1,0 +1,23 @@
+spring:
+  profiles.active: test
+logging:
+  config: classpath:logback.xml
+---
+spring:
+  profiles: local
+  redis:
+    hostname: 192.168.99.100
+    port: 6379
+server:
+  port : 8099
+  servlet-path: /
+
+---
+spring:
+  profiles: test
+  redis:
+      hostname: 192.168.99.100
+      port: 6379
+server:
+  port : 8099
+  servlet-path: /

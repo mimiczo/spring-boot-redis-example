@@ -1,0 +1,77 @@
+description = "spring-boot-redis-example"
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        //maven { url "http://repo.spring.io/plugins-release" }
+        //maven { url "http://repo.spring.io/plugins-milestone" }
+        //maven { url "http://repo.spring.io/plugins-snapshot" }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE"
+        //classpath 'org.springframework:springloaded:1.2.0.RELEASE'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    all*.exclude group: "commons-logging"
+    all*.exclude group: "log4j"
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-devtools"
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-redis"
+
+    //etc
+    compile "org.projectlombok:lombok:$lombokVersion"
+
+    //etc: jackson
+    compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonVersion"
+
+    //etc: jackson2
+    compile "com.fasterxml.jackson.core:jackson-databind:$jackson2Version"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson2Version"
+
+    //logger
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+    compile "ch.qos.logback:logback-core:$logbackVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+
+    //provide
+    //providedCompile "org.apache.tomcat.embed:tomcat-embed-jasper"
+
+    //test
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testCompile "com.jayway.jsonpath:json-path:$jsonpathVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    //testCompile "org.springframework.security:spring-security-test"
+}
+
+compileJava {
+	sourceCompatibility = "${javaVersion}"
+    targetCompatibility = "${javaVersion}"
+    options.encoding = "UTF-8"
+}
+
+compileTestJava {
+	sourceCompatibility = "${javaVersion}"
+    targetCompatibility = "${javaVersion}"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "$gradleVersion"
+}
